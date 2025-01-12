@@ -10,6 +10,14 @@
         body {
             padding: 20px;
         }
+        .container-fluid {
+            width: 100%;
+            padding: 0 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -77,9 +85,7 @@
                                 {% for form in formset %}
                                 <tr>
                                     <!-- Render the hidden ID field -->
-                                    <td style="display: none;">
-                                        <input type="hidden" name="{{ form.id.name }}" value="{{ form.id.value }}">
-                                    </td>
+                                    {{ form.id }}
                                     <td>{{ form.township }}</td>
                                     <td>{{ form.range }}</td>
                                     <td>{{ form.section }}</td>

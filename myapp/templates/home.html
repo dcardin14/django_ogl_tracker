@@ -5,25 +5,38 @@ Home Page
 {% endblock %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <h1>Leases</h1>
     <p>This is the home page</p>
 
     <!-- Dynamic list of leases -->
-    <ul class="list-group mt-3">
-        {% for ogl in ogl_list %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <!-- Display lease information -->
-            {{ ogl.docNo }} - {{ ogl.lessee }} - {{ ogl.effDate }}
-            
-            <!-- Update button -->
-            <a href="{% url 'update_ogl' ogl.id %}" class="btn btn-primary btn-sm">Update</a>
-        </li>
-        {% empty %}
-        <li class="list-group-item">
-            No leases found. <a href="{% url 'add_ogl' %}">Create one</a>.
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Document Number</th>
+                    <th>Lessee</th>
+                    <th>Effective Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ogl in ogl_list %}
+                <tr>
+                    <td>{{ ogl.docNo }}</td>
+                    <td>{{ ogl.lessee }}</td>
+                    <td>{{ ogl.effDate }}</td>
+                    <td>
+                        <a href="{% url 'update_ogl' ogl.id %}" class="btn btn-primary btn-sm">Update</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No leases found. <a href="{% url 'add_ogl' %}">Create one</a>.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

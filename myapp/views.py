@@ -17,13 +17,6 @@ def update_ogl(request, pk):
         form = OGLForm(request.POST, instance=ogl)
         formset = MineralTractFormset(request.POST, instance=ogl)
 
-        if formset.is_valid():
-            print("Formset is valid")
-        else:
-            print("Formset errors:", formset.errors)
-            for form in formset:
-                print("Form cleaned_data:", form.cleaned_data)
-
         if form.is_valid() and formset.is_valid():
             ogl = form.save()
             formset.instance = ogl  # Bind formset to the OGL instance
