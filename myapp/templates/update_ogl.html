@@ -76,6 +76,10 @@
                             <tbody>
                                 {% for form in formset %}
                                 <tr>
+                                    <!-- Render the hidden ID field -->
+                                    <td style="display: none;">
+                                        <input type="hidden" name="{{ form.id.name }}" value="{{ form.id.value }}">
+                                    </td>
                                     <td>{{ form.township }}</td>
                                     <td>{{ form.range }}</td>
                                     <td>{{ form.section }}</td>
