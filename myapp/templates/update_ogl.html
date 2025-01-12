@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Update Lease</title>
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Home Button -->
+        <a href="{% url 'home' %}" class="btn btn-primary mb-3">Home</a>
+
+        <h1 class="mb-4">Update Lease</h1>
+
+        <!-- Navigation Arrows -->
+        <div class="d-flex justify-content-between mb-4">
+            {% if prev_ogl %}
+            <a href="{% url 'update_ogl' prev_ogl.id %}" class="btn btn-outline-primary">
+                &larr; Previous
+            </a>
+            {% else %}
+            <button class="btn btn-outline-primary disabled">&larr; Previous</button>
+            {% endif %}
+
+            {% if next_ogl %}
+            <a href="{% url 'update_ogl' next_ogl.id %}" class="btn btn-outline-primary">
+                Next &rarr;
+            </a>
+            {% else %}
+            <button class="btn btn-outline-primary disabled">Next &rarr;</button>
+            {% endif %}
+        </div>
+
+        <!-- OGL Form -->
+        <form method="post">
+            {% csrf_token %}
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">OGL Details</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form.as_p }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mineral Tracts -->
+            <h2>Mineral Tracts</h2>
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">Mineral Tracts</div>
+                <div class="card-body">
+                    {{ formset.management_form }}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Township</th>
+                                    <th>Range</th>
+                                    <th>Section</th>
+                                    <th>Description</th>
+                                    <th>Gross</th>
+                                    <th>Owner</th>
+                                    <th>Percent</th>
+                                    <th>Net</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                    <td>{{ form.township }}</td>
+                                    <td>{{ form.range }}</td>
+                                    <td>{{ form.section }}</td>
+                                    <td>{{ form.desc }}</td>
+                                    <td>{{ form.gross }}</td>
+                                    <td>{{ form.owner }}</td>
+                                    <td>{{ form.percent }}</td>
+                                    <td>{{ form.net }}</td>
+                                    <td>{{ form.DELETE }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-3">Save</button>
+        </form>
+    </div>
+</body>
+</html>

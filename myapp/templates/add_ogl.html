@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add Lease</title>
+    <link
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <style>
+        /* Optional: Improve spacing */
+        body {
+            padding: 20px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Home Button -->
+        <a href="{% url 'home' %}" class="btn btn-primary mb-3">Home</a>
+
+        <h1 class="mb-4">Add New Lease</h1>
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- OGL Form Section -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">OGL Details</div>
+                <div class="card-body">
+                    {{ form.as_p }}
+                </div>
+            </div>
+
+            <!-- Mineral Tracts Section -->
+            <h2>Mineral Tracts</h2>
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">Mineral Tracts</div>
+                <div class="card-body">
+                    {{ formset.management_form }} <!-- Hidden management form -->
+                    <div class="table-responsive">
+                        <table id="mineral-tracts-table" class="table table-bordered table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Township</th>
+                                    <th>Range</th>
+                                    <th>Section</th>
+                                    <th>Description</th>
+                                    <th>Gross</th>
+                                    <th>Owner</th>
+                                    <th>Percent</th>
+                                    <th>Net</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                    <td>{{ form.township }}</td>
+                                    <td>{{ form.range }}</td>
+                                    <td>{{ form.section }}</td>
+                                    <td>{{ form.desc }}</td>
+                                    <td>{{ form.gross }}</td>
+                                    <td>{{ form.owner }}</td>
+                                    <td>{{ form.percent }}</td>
+                                    <td>{{ form.net }}</td>
+                                    <td>{{ form.DELETE }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" id="add-row" class="btn btn-primary btn-sm mt-2">Add Row</button>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-success mt-3">Save</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script>
+        // JavaScript for dynamically adding rows
+        $(document).ready(function () {
+            let totalForms = $("#id_form-TOTAL_FORMS"); // Total form count input
+            let tableBody = $("#mineral-tracts-table tbody"); // Table body
+            let emptyRowHtml = `
+                <tr>
+                    <td><input type="text" name="form-__prefix__-township" class="form-control"></td>
+                    <td><input type="text" name="form-__prefix__-range" class="form-control"></td>
+                    <td><input type="text" name="form-__prefix__-section" class="form-control"></td>
+                    <td><input type="text" name="form-__prefix__-desc" class="form-control"></td>
+                    <td><input type="number" name="form-__prefix__-gross" class="form-control"></td>
+                    <td><input type="text" name="form-__prefix__-owner" class="form-control"></td>
+                    <td><input type="number" name="form-__prefix__-percent" class="form-control"></td>
+                    <td><input type="number" name="form-__prefix__-net" class="form-control"></td>
+                    <td><button type="button" class="btn btn-danger btn-sm remove-row">Remove</button></td>
+                </tr>
+            `;
+
+            // Add a new row
+            $("#add-row").click(function () {
+                let formCount = parseInt(totalForms.val());
+                let newRow = emptyRowHtml.replace(/__prefix__/g, formCount);
+                tableBody.append(newRow);
+                totalForms.val(formCount + 1); // Increment form count
+            });
+
+            // Remove a row
+            tableBody.on("click", ".remove-row", function () {
+                $(this).closest("tr").remove();
+                // Optional: Adjust TOTAL_FORMS if needed
+            });
+        });
+    </script>
+</body>
+</html>
