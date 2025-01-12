@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Lease Details
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h1>Lease Details</h1>
+    <p>This is the details page for the lease.</p>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">OGL Details</div>
+        <div class="card-body">
+            <p><strong>Document Number:</strong> {{ ogl.docNo }}</p>
+            <p><strong>Effective Date:</strong> {{ ogl.effDate }}</p>
+            <p><strong>Received Date:</strong> {{ ogl.recDate }}</p>
+            <p><strong>Lessor:</strong> {{ ogl.lessor }}</p>
+            <p><strong>Lessee:</strong> {{ ogl.lessee }}</p>
+            <p><strong>Legal Description:</strong> {{ ogl.legal_desc }}</p>
+            <p><strong>Term (Years):</strong> {{ ogl.term_in_years }}</p>
+            <p><strong>Royalty:</strong> {{ ogl.royalty }}</p>
+        </div>
+    </div>
+
+    <h2>Mineral Tracts</h2>
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">Mineral Tracts</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Township</th>
+                            <th>Range</th>
+                            <th>Section</th>
+                            <th>Description</th>
+                            <th>Gross</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tract in ogl.mineraltract_set.all %}
+                        <tr>
+                            <td>{{ tract.township }}</td>
+                            <td>{{ tract.range }}</td>
+                            <td>{{ tract.section }}</td>
+                            <td>{{ tract.desc }}</td>
+                            <td>{{ tract.gross }}</td>
+                            <td>{{ tract.owner }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="{% url 'update_ogl' ogl.id %}" class="btn btn-primary">Update</a>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+</div>
+{% endblock %}

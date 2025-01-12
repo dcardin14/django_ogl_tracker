@@ -18,6 +18,15 @@
             vertical-align: middle;
             text-align: center;
         }
+        .form-group {
+            margin-bottom: 5px; /* Reduce vertical space between form fields */
+        }
+        .form-control {
+            padding: 5px; /* Reduce padding inside form fields */
+        }
+        .form-group > label, .form-group > div {
+            margin-bottom: 5px; /* Reduce vertical space between label and input */
+        }
     </style>
 </head>
 <body>
@@ -53,8 +62,41 @@
                 <div class="card-header bg-primary text-white">OGL Details</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12">
-                            {{ form.as_p }}
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_docNo">Document Number</label>
+                                {{ form.docNo }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_effDate">Effective Date</label>
+                                {{ form.effDate }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_recDate">Received Date</label>
+                                {{ form.recDate }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_lessor">Lessor</label>
+                                {{ form.lessor }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_lessee">Lessee</label>
+                                {{ form.lessee }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_legal_desc">Legal Description</label>
+                                {{ form.legal_desc }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_term_in_years">Term (Years)</label>
+                                {{ form.term_in_years }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_royalty">Royalty</label>
+                                {{ form.royalty }}
+                            </div>
                         </div>
                     </div>
                 </div>
